@@ -1,5 +1,6 @@
 import React from 'react';
-import { BrowserRouter, Routes, Route, Link } from 'react-router-dom';
+import { BrowserRouter, Routes, Route } from 'react-router-dom';
+import Sidebar from './components/layout/Sidebar';
 import Dashboard from './pages/Dashboard';
 import ResumeBuilder from './pages/ResumeBuilder';
 import JobPortal from './pages/JobPortal';
@@ -9,17 +10,10 @@ import './App.css';
 function App() {
   return (
     <BrowserRouter>
-      <div className="app-container">
-        <nav className="navbar" style={navStyle}>
-          <ul style={ulStyle}>
-            <li style={liStyle}><Link to="/" style={linkStyle}>Dashboard</Link></li>
-            <li style={liStyle}><Link to="/resume" style={linkStyle}>Resume Builder</Link></li>
-            <li style={liStyle}><Link to="/jobs" style={linkStyle}>Job Portal</Link></li>
-            <li style={liStyle}><Link to="/prep" style={linkStyle}>Placement Prep</Link></li>
-          </ul>
-        </nav>
+      <div className="app-container" style={appContainerStyle}>
+        <Sidebar />
         
-        <main style={mainStyle}>
+        <main style={mainContentStyle}>
           <Routes>
             <Route path="/" element={<Dashboard />} />
             <Route path="/resume" element={<ResumeBuilder />} />
@@ -32,33 +26,18 @@ function App() {
   );
 }
 
-const navStyle = {
-  backgroundColor: '#333',
-  padding: '1rem',
-  marginBottom: '20px'
-};
-
-const ulStyle = {
-  listStyleType: 'none',
-  padding: 0,
-  margin: 0,
+const appContainerStyle = {
   display: 'flex',
-  justifyContent: 'space-around'
+  minHeight: '100vh',
+  backgroundColor: '#f8f9fc'
 };
 
-const liStyle = {
-  margin: '0 10px'
-};
-
-const linkStyle = {
-  color: 'white',
-  textDecoration: 'none',
-  fontWeight: 'bold'
-};
-
-const mainStyle = {
-  padding: '20px',
-  textAlign: 'center'
+const mainContentStyle = {
+  flex: 1,
+  marginLeft: '240px', // Matches Sidebar width
+  padding: '2rem',
+  minHeight: '100vh',
+  overflowY: 'auto'
 };
 
 export default App;
