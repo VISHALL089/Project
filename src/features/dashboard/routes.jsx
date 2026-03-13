@@ -1,11 +1,11 @@
 import React, { lazy } from 'react';
 
-// Lazy load the Dashboard component
-const DashboardPage = lazy(() => import('./DashboardPage'));
+// Lazy load the real Dashboard component
+const Dashboard = lazy(() => import('./pages/Dashboard'));
 
 export const dashboardRoutes = [
   {
     path: '/',
-    element: <DashboardPage />,
+    element: <Dashboard />,
   }
 ];
