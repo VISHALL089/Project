@@ -1,0 +1,292 @@
+/* Resume Builder Feature Styles */
+
+:root {
+  --rb-bg-primary: #F7F6F3;
+  --rb-acc-red: #8B0000;
+  --rb-text-main: #1A1A1A;
+  --rb-text-sub: #666;
+  --rb-border-color: #E2E2E2;
+  --rb-font-serif: 'Playfair Display', serif;
+  --rb-font-sans: 'Inter', sans-serif;
+}
+
+/* Scoped variables for the feature to avoid global conflict if needed, 
+   but original used --bg-primary etc. I will search/replace if I want to be safe.
+   For now, I'll keep them but prefix them if they conflict with Super App. 
+   Actually, let's keep them as original to maintain the "Wow" aesthetics 
+   but scope them to a container if possible. 
+*/
+
+.resume-module-container {
+  --bg-primary: #F7F6F3;
+  --acc-red: #8B0000;
+  --text-main: #1A1A1A;
+  --text-sub: #666;
+  --border-color: #E2E2E2;
+  --font-serif: 'Playfair Display', serif;
+  --font-sans: 'Inter', sans-serif;
+  --transition: all 0.2s cubic-bezier(0.4, 0, 0.2, 1);
+  --shadow: 0 4px 6px -1px rgba(0, 0, 0, 0.1), 0 2px 4px -1px rgba(0, 0, 0, 0.06);
+  
+  font-family: var(--font-sans);
+  color: var(--text-main);
+}
+
+.resume-module-container .serif-heading {
+  font-family: var(--font-serif);
+  letter-spacing: -0.01em;
+  font-weight: 700;
+  color: var(--text-main);
+}
+
+/* Builder Layout */
+.resume-module-container .builder-layout {
+  display: grid;
+  grid-template-columns: minmax(450px, 1fr) minmax(0, 1fr);
+  background: var(--bg-primary);
+}
+
+.resume-module-container .form-panel {
+  padding: 40px;
+  background: var(--bg-primary);
+}
+
+.resume-module-container .preview-panel {
+  background: #E5E7EB;
+  padding: 64px;
+  display: flex;
+  justify-content: center;
+}
+
+/* UI Elements */
+.resume-module-container input,
+.resume-module-container textarea {
+  width: 100%;
+  background: white;
+  border: 1px solid var(--border-color);
+  padding: 12px 16px;
+  font-size: 14px;
+  font-family: inherit;
+  color: var(--text-main);
+  outline: none;
+  transition: border-color 0.2s;
+}
+
+.resume-module-container input:focus,
+.resume-module-container textarea:focus {
+  border-color: var(--acc-red);
+}
+
+.resume-module-container label {
+  display: block;
+  font-size: 11px;
+  font-weight: 700;
+  text-transform: uppercase;
+  letter-spacing: 0.05em;
+  margin-bottom: 8px;
+  color: var(--text-sub);
+}
+
+.resume-module-container .field {
+  margin-bottom: 24px;
+}
+
+.resume-module-container .input-grid {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 16px;
+}
+
+.resume-module-container .form-section {
+  margin-bottom: 48px;
+  max-width: 600px;
+}
+
+.resume-module-container .form-section h3 {
+  font-size: 18px;
+  margin-bottom: 24px;
+  padding-bottom: 8px;
+  border-bottom: 1px solid var(--border-color);
+}
+
+.resume-module-container .entry-card {
+  padding: 20px;
+  background: white;
+  border: 1px solid var(--border-color);
+  border-radius: 4px;
+  margin-bottom: 16px;
+  font-size: 14px;
+}
+
+.resume-module-container .btn-primary {
+  background: var(--acc-red);
+  color: white;
+  border: none;
+  padding: 12px 24px;
+  cursor: pointer;
+  font-weight: 600;
+  transition: var(--transition);
+  font-family: var(--font-sans);
+  text-transform: uppercase;
+  letter-spacing: 0.05em;
+  border-radius: 2px;
+}
+
+.resume-module-container .btn-primary:hover {
+  filter: brightness(1.1);
+  transform: translateY(-1px);
+}
+
+.resume-module-container .btn-secondary {
+  background: transparent;
+  color: var(--text-main);
+  border: 1px solid var(--text-main);
+  padding: 10px 20px;
+  cursor: pointer;
+  transition: var(--transition);
+  font-weight: 600;
+  text-transform: uppercase;
+  letter-spacing: 0.05em;
+  font-size: 12px;
+  border-radius: 2px;
+}
+
+.resume-module-container .btn-secondary:hover {
+  background: var(--text-sub);
+  color: white;
+}
+
+.resume-module-container .preview-section-header {
+  border-bottom: 1.5px solid var(--accent-color, #000);
+  padding-bottom: 6px;
+  text-transform: uppercase;
+  font-size: 13px;
+  letter-spacing: 0.1em;
+  margin-bottom: 16px;
+  font-family: var(--font-sans);
+  font-weight: 700;
+  color: var(--accent-color, var(--text-main));
+}
+
+.resume-module-container .glass-card {
+  background: white;
+  font-weight: 800;
+}
+
+/* Template Picker */
+.resume-module-container .template-thumbnails {
+  display: flex;
+  gap: 20px;
+  margin-bottom: 24px;
+}
+
+.resume-module-container .template-thumb {
+  width: 120px;
+  height: 160px;
+  background: white;
+  border: 2px solid var(--border-color);
+  border-radius: 6px;
+  cursor: pointer;
+  padding: 8px;
+  position: relative;
+  transition: all 0.2s ease;
+  overflow: hidden;
+}
+
+.resume-module-container .template-thumb.active {
+  border-color: #3B82F6;
+  box-shadow: 0 0 0 2px rgba(59, 130, 246, 0.2);
+}
+
+.resume-module-container .template-thumb.active::after {
+  content: '✓';
+  position: absolute;
+  top: 4px;
+  right: 4px;
+  background: #3B82F6;
+  color: white;
+  width: 16px;
+  height: 16px;
+  border-radius: 50%;
+  font-size: 10px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-weight: 800;
+}
+
+/* Layout Sketches */
+.resume-module-container .sketch-line { height: 4px; background: #eee; border-radius: 2px; margin-bottom: 6px; }
+.resume-module-container .sketch-header { height: 12px; background: #ddd; margin-bottom: 12px; }
+.resume-module-container .sketch-classic .sketch-header { width: 60%; margin-left: auto; margin-right: auto; }
+.resume-module-container .sketch-modern { display: grid; grid-template-columns: 30% 70%; gap: 8px; height: 100%; }
+.resume-module-container .sketch-modern-side { background: #f8f8f8; padding: 4px; border-radius: 2px; }
+.resume-module-container .sketch-modern-main { padding: 4px; }
+.resume-module-container .sketch-minimal .sketch-header { width: 40%; }
+.resume-module-container .sketch-minimal .sketch-line { width: 100%; height: 2px; }
+
+.resume-module-container .color-circles { display: flex; gap: 12px; margin-bottom: 32px; }
+.resume-module-container .color-circle { width: 24px; height: 24px; border-radius: 50%; cursor: pointer; border: 2px solid transparent; transition: transform 0.2s; }
+.resume-module-container .color-circle:hover { transform: scale(1.1); }
+.resume-module-container .color-circle.active { border-color: #3B82F6; transform: scale(1.1); }
+
+/* Layout Variations */
+.resume-module-container .resume-preview-shell {
+  width: 850px;
+  background: white;
+  min-height: 1100px;
+  box-shadow: 0 20px 50px rgba(0,0,0,0.1);
+  margin: 0 auto;
+  position: relative;
+}
+
+.resume-module-container .resume-preview-shell.modern {
+  display: grid;
+  grid-template-columns: 280px 1fr;
+  padding: 0 !important;
+}
+
+.resume-module-container .modern-sidebar { padding: 60px 40px; }
+.resume-module-container .modern-main { padding: 60px 40px; }
+.resume-module-container .skill-tag-preview {
+  display: inline-block;
+  background: #eee;
+  padding: 2px 10px;
+  border-radius: 4px;
+  font-size: 11px;
+  margin: 2px;
+  color: #333;
+}
+
+/* ATS Score */
+.resume-module-container .score-circle-container {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 16px;
+  background: white;
+  padding: 32px;
+  border-radius: 12px;
+  box-shadow: 0 4px 6px -1px rgba(0, 0, 0, 0.1);
+}
+
+.resume-module-container .circular-progress { position: relative; width: 120px; height: 120px; }
+.resume-module-container .circular-progress svg { transform: rotate(-90deg); width: 120px; height: 120px; }
+.resume-module-container .circular-progress circle { fill: none; stroke-width: 8; stroke-linecap: round; }
+.resume-module-container .circular-progress .bg { stroke: #f3f4f6; }
+.resume-module-container .score-text { position: absolute; top: 50%; left: 50%; transform: translate(-50%, -50%); display: flex; flexDirection: column; alignItems: center; }
+.resume-module-container .score-value { font-size: 28px; fontWeight: 800; }
+.resume-module-container .score-label { font-size: 10px; text-transform: uppercase; font-weight: 700; opacity: 0.6; }
+
+/* Print Styles */
+@media print {
+  .no-print { display: none !important; }
+}
+
+/* Progress Bar */
+.resume-module-container .score-meter-bg { width: 100%; height: 8px; background: #eee; border-radius: 4px; margin-top: 8px; overflow: hidden; }
+.resume-module-container .score-meter-fill { height: 100%; background: var(--acc-red); transition: width 0.3s ease; }
+
+.resume-module-container .pill-container { display: flex; flex-wrap: wrap; gap: 8px; margin-top: 12px; }
+.resume-module-container .pill { display: flex; alignItems: center; gap: 6px; background: #f0f0f0; padding: 4px 12px; borderRadius: 100px; fontSize: 12px; fontWeight: 500; }
+.resume-module-container .pill-remove { cursor: pointer; color: var(--acc-red); fontWeight: 800; }

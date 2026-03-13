@@ -1,11 +1,10 @@
 import React, { lazy } from 'react';
 
-// Lazy load the Resume component
-const ResumePage = lazy(() => import('./ResumePage'));
+const ResumeLayout = lazy(() => import('./ResumeLayout'));
 
 export const resumeRoutes = [
   {
-    path: '/resume',
-    element: <ResumePage />,
+    path: '/resume/*',
+    element: <ResumeLayout />,
   }
 ];
