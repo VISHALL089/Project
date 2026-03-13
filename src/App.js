@@ -1,17 +1,25 @@
 import React, { Suspense } from 'react';
-import { BrowserRouter, Routes, Route } from 'react-router-dom';
+import { BrowserRouter, Routes, Route, Navigate } from 'react-router-dom';
 import MainLayout from './layouts/MainLayout';
+import ProtectedRoute from './components/auth/ProtectedRoute';
+import { AuthProvider } from './context/AuthContext';
 
 // Modular Feature Routes
 import { dashboardRoutes } from './features/dashboard/routes';
 import { resumeRoutes } from './features/resume/routes';
 import { jobsRoutes } from './features/jobs/routes';
+import { authRoutes } from './features/auth/routes';
 
-// Combine all feature routes into a single flat array
-const featureRoutes = [
-  ...dashboardRoutes,
+// Combine feature routes that should be protected
+const protectedFeatureRoutes = [
+  ...dashboardRoutes, // Usually Dashboard is protected
   ...resumeRoutes,
   ...jobsRoutes,
+];
+
+// Combine public routes
+const publicRoutes = [
+  ...authRoutes
 ];
 
 /**
@@ -20,29 +28,42 @@ const featureRoutes = [
 const PageLoader = () => (
   <div style={loaderContainerStyle}>
     <div style={loaderSpinnerStyle}></div>
-    <p style={loaderTextStyle}>Loading Module...</p>
+    <p style={loaderTextStyle}>Initializing Suite...</p>
   </div>
 );
 
 function App() {
   return (
-    <BrowserRouter>
-      {/* Suspense is required for React.lazy components */}
-      <Suspense fallback={<PageLoader />}>
-        <Routes>
-          {/* MainLayout acts as a wrapper for all internal pages */}
-          <Route element={<MainLayout />}>
-            {featureRoutes.map((route, index) => (
-              <Route 
-                key={index} 
-                path={route.path} 
-                element={route.element} 
-              />
+    <AuthProvider>
+      <BrowserRouter>
+        <Suspense fallback={<PageLoader />}>
+          <Routes>
+            {/* Public Routes */}
+            {publicRoutes.map((route, index) => (
+              <Route key={`public-${index}`} path={route.path} element={route.element} />
             ))}
-          </Route>
-        </Routes>
-      </Suspense>
-    </BrowserRouter>
+
+            {/* Private (Protected) Routes wrapped in MainLayout */}
+            <Route element={
+              <ProtectedRoute>
+                <MainLayout />
+              </ProtectedRoute>
+            }>
+              {protectedFeatureRoutes.map((route, index) => (
+                <Route 
+                  key={`private-${index}`} 
+                  path={route.path} 
+                  element={route.element} 
+                />
+              ))}
+            </Route>
+
+            {/* Fallback */}
+            <Route path="*" element={<Navigate to="/" replace />} />
+          </Routes>
+        </Suspense>
+      </BrowserRouter>
+    </AuthProvider>
   );
 }
 
@@ -71,15 +92,5 @@ const loaderTextStyle = {
   color: '#64748b',
   fontWeight: '500',
 };
-
-// Add raw CSS for the spinner animation
-const styleSheet = document.createElement("style");
-styleSheet.innerText = `
-  @keyframes spin {
-    0% { transform: rotate(0deg); }
-    100% { transform: rotate(360deg); }
-  }
-`;
-document.head.appendChild(styleSheet);
 
 export default App;
