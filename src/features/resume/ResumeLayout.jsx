@@ -13,7 +13,7 @@ const ResumeLayout = () => {
 
   return (
     <ResumeProvider>
-      <div className="resume-feature-wrapper">
+      <div className="resume-module-container">
         <nav className="topbar no-print" style={{ 
           position: 'sticky', 
           top: 0, 
